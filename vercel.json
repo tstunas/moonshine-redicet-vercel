@@ -1,0 +1,14 @@
+{
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "/",
+      "permanent": false
+    },
+    {
+      "source": "/:path+",
+      "destination": "https://newdomain.com/board/:path+",
+      "permanent": true
+    }
+  ]
+}
