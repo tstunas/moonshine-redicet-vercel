@@ -28,7 +28,7 @@ export function middleware(req: NextRequest) {
       const newIndex = index + mapping.baseThreadIndex
 
       const redirectUrl = new URL(req.url)
-      redirectUrl.hostname = "https://moonshineland2.net"
+      redirectUrl.hostname = "moonshineland2.net"
       redirectUrl.pathname = `/${mapping.boardKey}/${newIndex}${rest}`
 
       return NextResponse.redirect(redirectUrl, 301)
@@ -37,7 +37,7 @@ export function middleware(req: NextRequest) {
 
   // 매핑 없으면 그대로 뒤에 붙여서 리다이렉트
   const fallback = new URL(req.url)
-  fallback.hostname = "https://moonshineland2.net"
+  fallback.hostname = "moonshineland2.net"
 
   return NextResponse.redirect(fallback, 301)
 }
