@@ -2,12 +2,12 @@
   "redirects": [
     {
       "source": "/",
-      "destination": "/",
-      "permanent": false
+      "destination": "https://moonshineland2.net",
+      "permanent": true
     },
     {
       "source": "/:path+",
-      "destination": "https://newdomain.com/board/:path+",
+      "destination": "https://moonshineland2.net/board/:path+",
       "permanent": true
     }
   ]
