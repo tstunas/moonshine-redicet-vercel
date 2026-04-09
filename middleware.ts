@@ -13,26 +13,31 @@ const threadIndexBases = {
 } as const
 
 export function middleware(req: NextRequest) {
-  const url = req.nextUrl.clone()
+  const url = req.nextUrl
   const path = url.pathname
 
-  // /{board}/{num}/...
   const match = path.match(/^\/([^\/]+)\/(\d+)(\/.*)?$/)
-  if (!match) return NextResponse.next()
 
-  const [, board, indexStr, rest = ""] = match
+  // 매핑 있는 경우
+  if (match) {
+    const [, board, indexStr, rest = ""] = match
+    const mapping = (threadIndexBases as any)[board]
 
-  const mapping = (threadIndexBases as any)[board]
-  if (!mapping) return NextResponse.next()
+    if (mapping) {
+      const index = parseInt(indexStr, 10)
+      const newIndex = index + mapping.baseThreadIndex
 
-  const index = parseInt(indexStr, 10)
-  const newIndex = index + mapping.baseThreadIndex
+      const redirectUrl = new URL(req.url)
+      redirectUrl.hostname = "https://moonshineland2.net"
+      redirectUrl.pathname = `/${mapping.boardKey}/${newIndex}${rest}`
 
-  url.pathname = `/${mapping.boardKey}/${newIndex}${rest}`
+      return NextResponse.redirect(redirectUrl, 301)
+    }
+  }
 
-  return NextResponse.redirect(url, 301)
-}
+  // 매핑 없으면 그대로 뒤에 붙여서 리다이렉트
+  const fallback = new URL(req.url)
+  fallback.hostname = "https://moonshineland2.net"
 
-export const config = {
-  matcher: '/:path*',
+  return NextResponse.redirect(fallback, 301)
 }
