@@ -29,7 +29,7 @@ export function middleware(req: NextRequest) {
 
       const redirectUrl = new URL(req.url)
       redirectUrl.hostname = "moonshineland2.net"
-      redirectUrl.pathname = `/${mapping.boardKey}/${newIndex}${rest}`
+      redirectUrl.pathname = `/board/${mapping.boardKey}/${newIndex}${rest}`
 
       return NextResponse.redirect(redirectUrl, 301)
     }
